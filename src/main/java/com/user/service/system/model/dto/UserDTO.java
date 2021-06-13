@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @FieldNameConstants
 public class UserDTO {
 
+    private int id;
+
     private String name;
 
     private String username;
