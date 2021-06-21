@@ -120,6 +120,7 @@
 						com.user.service.system.BaseContractSetup
 					</baseClassForTests>
 					<testFramework>JUNIT5</testFramework>
+					<testMode>MOCKMVC</testMode>
 				</configuration>
 			</plugin>
 		</plugins>
