@@ -1,0 +1,14 @@
+{
+  "error": null,
+  "users": [
+    {
+      "email": "email1",
+      "id": 1,
+      "localDate": "2021-06-18",
+      "name": "name1",
+      "password": "password1",
+      "username": "username1"
+    }
+  ],
+  "success": true
+}
