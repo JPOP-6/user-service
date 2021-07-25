@@ -1,6 +1,8 @@
 package com.user.service.system.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import java.time.LocalDate;
 @Data
 @FieldNameConstants
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "USER")
 public class User {
 
