@@ -1,8 +1,8 @@
 package com.user.service.system.service;
 
-import com.user.service.system.event.sourcing.commands.CreateUserCommand;
-import com.user.service.system.event.sourcing.commands.UpdateUserCommand;
+import com.user.service.system.event.sourcing.events.CreateUserEvent;
 import com.user.service.system.event.sourcing.events.DeleteUserEvent;
+import com.user.service.system.event.sourcing.events.UpdateUserEvent;
 import com.user.service.system.model.UserQuery;
 import com.user.service.system.model.dto.UserDTO;
 import com.user.service.system.model.mapper.UserModelMapperImpl;
@@ -19,13 +19,13 @@ public class UserProjection {
     private final UserModelMapperImpl userModelMapper;
 
     @EventHandler
-    public void on(CreateUserCommand event) {
+    public void on(CreateUserEvent event) {
         UserDTO user = userModelMapper.toDTO(event);
         this.userService.addUser(user);
     }
 
     @EventHandler
-    public void on(UpdateUserCommand event) {
+    public void on(UpdateUserEvent event) {
         UserDTO userDTO = userModelMapper.update(new UserDTO(), event);
         this.userService.updateUser(event.id, userDTO);
     }

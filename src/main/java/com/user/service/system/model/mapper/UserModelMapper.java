@@ -2,6 +2,8 @@ package com.user.service.system.model.mapper;
 
 import com.user.service.system.event.sourcing.commands.CreateUserCommand;
 import com.user.service.system.event.sourcing.commands.UpdateUserCommand;
+import com.user.service.system.event.sourcing.events.CreateUserEvent;
+import com.user.service.system.event.sourcing.events.UpdateUserEvent;
 import com.user.service.system.model.User;
 import com.user.service.system.model.dto.UserDTO;
 import org.mapstruct.*;
@@ -14,7 +16,7 @@ public interface UserModelMapper {
 
     User toEntity(CreateUserCommand event);
 
-    UserDTO toDTO(CreateUserCommand event);
+    UserDTO toDTO(CreateUserEvent event);
 
     @Mappings({
             @Mapping(target = "username", ignore = true)
@@ -29,7 +31,7 @@ public interface UserModelMapper {
     @Mappings({
             @Mapping(target = "username", ignore = true)
     })
-    UserDTO update(@MappingTarget UserDTO user, UpdateUserCommand updateUserCommand);
+    UserDTO update(@MappingTarget UserDTO user, UpdateUserEvent updateUserCommand);
 
     UserDTO toDto(User book);
 }

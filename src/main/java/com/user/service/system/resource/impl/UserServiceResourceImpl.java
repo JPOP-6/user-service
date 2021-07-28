@@ -56,9 +56,10 @@ public class UserServiceResourceImpl implements UserServiceResource {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            UserDTO user = commandService.createUser(userDTO).get();
+            Integer id = commandService.createUser(userDTO).get();
             userServiceResult.setSuccess(true);
-            userServiceResult.setUsers(Collections.singletonList(user));
+            //userDTO = userQueryService.findById(id).get();
+            //userServiceResult.setUsers(Collections.singletonList(userDTO));
             responseEntity = ResponseEntity.ok(userServiceResult);
         } catch (Exception exception) {
             userServiceResult.setError(exception.getMessage());
@@ -87,9 +88,10 @@ public class UserServiceResourceImpl implements UserServiceResource {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            UserDTO user = commandService.updateUser(id, userDTO).get();
+            commandService.updateUser(id, userDTO).get();
             userServiceResult.setSuccess(true);
-            userServiceResult.setUsers(Collections.singletonList(user));
+            //userDTO = userQueryService.findById(id).get();
+            //userServiceResult.setUsers(Collections.singletonList(userDTO));
             responseEntity = ResponseEntity.ok(userServiceResult);
         } catch (Exception exception) {
             userServiceResult.setError(exception.getMessage());

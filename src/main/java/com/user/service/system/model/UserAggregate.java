@@ -7,19 +7,23 @@ import com.user.service.system.event.sourcing.events.CreateUserEvent;
 import com.user.service.system.event.sourcing.events.DeleteUserEvent;
 import com.user.service.system.event.sourcing.events.UpdateUserEvent;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Data
+@Component
 @FieldNameConstants
 @Aggregate
+@NoArgsConstructor
 public class UserAggregate {
 
     @AggregateIdentifier
@@ -57,11 +61,6 @@ public class UserAggregate {
                 updateUserCommand.getEmail(), updateUserCommand.getPassword(), updateUserCommand.getLocalDate()));
     }
 
-    @CommandHandler
-    public void handle(DeleteUserCommand deleteUserCommand) {
-        apply(new DeleteUserEvent(deleteUserCommand.getId()));
-    }
-
     @EventSourcingHandler
     public void on(UpdateUserEvent updateUserEvent) {
         this.id = updateUserEvent.id;
@@ -69,6 +68,11 @@ public class UserAggregate {
         this.email = updateUserEvent.getEmail();
         this.password = updateUserEvent.getPassword();
         this.localDate = updateUserEvent.getLocalDate();
+    }
+
+    @CommandHandler
+    public void handle(DeleteUserCommand deleteUserCommand) {
+        apply(new DeleteUserEvent(deleteUserCommand.getId()));
     }
 
     @EventSourcingHandler
