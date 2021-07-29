@@ -2,32 +2,31 @@ package com.user.service.system.resource.impl;
 
 import com.user.service.system.model.dto.UserDTO;
 import com.user.service.system.resource.api.UserServiceResource;
-import com.user.service.system.service.UserService;
+import com.user.service.system.service.CommandServiceImpl;
+import com.user.service.system.service.UserQueryService;
 import com.user.service.system.utility.UserServiceResult;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
-import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserServiceResourceImpl implements UserServiceResource {
 
-    private final UserService userService;
+    private final UserQueryService userQueryService;
 
-    public UserServiceResourceImpl(@Autowired UserService userService) {
-        this.userService = userService;
-    }
+    private final CommandServiceImpl commandService;
 
     @Override
     public ResponseEntity<UserServiceResult> getAllUsers() {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            List<UserDTO> users = userService.getAllUsers();
+           // List<UserDTO> users = userQueryService.getAllUsers();
             userServiceResult.setSuccess(true);
-            userServiceResult.setUsers(users);
+            //userServiceResult.setUsers(users);
             responseEntity = ResponseEntity.ok(userServiceResult);
         } catch (Exception exception) {
             userServiceResult.setError(exception.getMessage());
@@ -41,7 +40,7 @@ public class UserServiceResourceImpl implements UserServiceResource {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            UserDTO user = userService.getUserById(id);
+            UserDTO user = userQueryService.findById(id).get();
             userServiceResult.setSuccess(true);
             userServiceResult.setUsers(Collections.singletonList(user));
             responseEntity = ResponseEntity.ok(userServiceResult);
@@ -57,9 +56,10 @@ public class UserServiceResourceImpl implements UserServiceResource {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            UserDTO user = userService.addUser(userDTO);
+            Integer id = commandService.createUser(userDTO).get();
             userServiceResult.setSuccess(true);
-            userServiceResult.setUsers(Collections.singletonList(user));
+            //userDTO = userQueryService.findById(id).get();
+            //userServiceResult.setUsers(Collections.singletonList(userDTO));
             responseEntity = ResponseEntity.ok(userServiceResult);
         } catch (Exception exception) {
             userServiceResult.setError(exception.getMessage());
@@ -73,7 +73,7 @@ public class UserServiceResourceImpl implements UserServiceResource {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            userService.deleteUser(id);
+            commandService.deleteUser(id);
             userServiceResult.setSuccess(true);
             responseEntity = ResponseEntity.ok(userServiceResult);
         } catch (Exception exception) {
@@ -88,9 +88,10 @@ public class UserServiceResourceImpl implements UserServiceResource {
         ResponseEntity<UserServiceResult> responseEntity;
         UserServiceResult userServiceResult = new UserServiceResult();
         try {
-            UserDTO user = userService.updateUser(id, userDTO);
+            commandService.updateUser(id, userDTO).get();
             userServiceResult.setSuccess(true);
-            userServiceResult.setUsers(Collections.singletonList(user));
+            //userDTO = userQueryService.findById(id).get();
+            //userServiceResult.setUsers(Collections.singletonList(userDTO));
             responseEntity = ResponseEntity.ok(userServiceResult);
         } catch (Exception exception) {
             userServiceResult.setError(exception.getMessage());

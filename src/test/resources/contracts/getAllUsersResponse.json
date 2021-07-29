@@ -1,0 +1,22 @@
+{
+  "error": null,
+  "users": [
+    {
+      "email": "email1",
+      "id": 1,
+      "localDate": "2021-06-18",
+      "name": "name1",
+      "password": "password1",
+      "username": "username1"
+    },
+    {
+      "email": "email2",
+      "id": 2,
+      "localDate": "2021-06-18",
+      "name": "name2",
+      "password": "password2",
+      "username": "username2"
+    }
+  ],
+  "success": true
+}
